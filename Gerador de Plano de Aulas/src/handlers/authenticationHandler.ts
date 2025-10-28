@@ -1,4 +1,4 @@
-import { supabase } from "../supabase-client";
+import { supabase } from "../components/clients/supabase-client";
 
 // CADASTRO
 export const signUp = async (email:string, password:string) => {
