@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import Auth from "./components/Auth";
 import { Button, Container, Navbar } from "react-bootstrap";
-import { supabase } from "./supabase-client";
 import type { Session } from "@supabase/supabase-js";
 import { BrowserRouter, Link, Navigate, Route, Routes} from "react-router-dom";
+import { fetchSession, logout, setSessionListener } from "./handlers/sessionHandler";
 
 function App() {
   // UseState da sessão atual
@@ -11,29 +11,21 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   // Atualiza a sessão para corresponder com a atual
-  const fetchSession = async () => {
-    const curentSession = await supabase.auth.getSession();
-    setSession(curentSession.data.session)
+  const getSession = async () => {
+    setSession(await fetchSession());
     setLoading(false);
   }
 
 // Carrega a sessão ao renderizar a página
   useEffect(() => {
-    fetchSession();
+    getSession();
 
-    const {data: authListener} = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-    })
+    const subscription = setSessionListener(setSession);
 
     return () => {
-      authListener.subscription.unsubscribe();
+      subscription.subscription.unsubscribe();
     }
   }, [])
-
-  // Função de logout
-  const logout = async () => {
-    await supabase.auth.signOut();
-  }
 
   // Render da página
   return (
