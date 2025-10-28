@@ -1,6 +1,6 @@
 export interface Plan{
     id: number,
     subject: string,
-    urlPdf: string,
+    pdfUrl: string,
     user: number,
 }

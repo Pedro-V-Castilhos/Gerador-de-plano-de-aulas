@@ -1,0 +1,31 @@
+.viewPlans{
+    margin: 2em;
+    text-align: left;
+    gap:2em;
+    width:60%;
+    height:100%;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+th{
+    background-color: rgb(211, 211, 211);
+    font-size: large;
+}
+
+th, td {
+    padding: 1em;
+    text-align: left;
+    border: 3px solid rgb(87, 87, 87);
+    width: auto;
+}
+
+th:first-child, td:first-child{
+    width: 25%;
+}
+
+button{margin: 1em 0}

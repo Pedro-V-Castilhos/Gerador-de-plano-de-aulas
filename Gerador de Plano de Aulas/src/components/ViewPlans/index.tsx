@@ -3,6 +3,7 @@ import type { Plan } from "../../types/plan"
 import { fetchPlans } from "../../handlers/planHandler";
 import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import "./styles.css"
 
 export default function ViewPlans(){
     const [plans, setPlans] = useState<Plan[]>([]);
@@ -18,6 +19,8 @@ export default function ViewPlans(){
 
     return(
     <div className="viewPlans">
+        <Button variant="primary" onClick={() => redirect("/new")}>Novo plano</Button>
+        <br/>
         <table>
             <thead>
                 <tr>
@@ -28,10 +31,11 @@ export default function ViewPlans(){
             <tbody>
                 {plans.length != 0
                 ? plans.map((plan) => {
+                    console.log(plan)
                     return(
-                        <tr>
+                        <tr key={plan.id}>
                             <td>{plan.subject}</td>
-                            <td>{plan.urlPdf}</td>
+                            <td><a href={plan.pdfUrl}>{plan.pdfUrl}</a></td>
                         </tr>
                     )
                 })
@@ -39,7 +43,6 @@ export default function ViewPlans(){
                 }
             </tbody>
         </table>
-        <Button variant="primary" onClick={() => redirect("/new")}>Novo plano</Button>
     </div>
 )
 }
