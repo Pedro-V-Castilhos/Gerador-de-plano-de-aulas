@@ -4,6 +4,7 @@ import { Button, Container, Navbar } from "react-bootstrap";
 import type { Session } from "@supabase/supabase-js";
 import { BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
 import { fetchSession, logout, setSessionListener } from "./handlers/sessionHandler";
+import ViewPlans from "./components/ViewPlans";
 
 function App() {
   // UseState da sessão atual
@@ -48,7 +49,7 @@ function App() {
       {!loading && (
           <Routes>
             <Route path="/" element={session ? <Navigate to="/plans" /> : <Navigate to="/authenticate" />}/>
-            <Route path="/plans" element={session ? <>aaaaa</> : <Navigate to="/authenticate" />}/>
+            <Route path="/plans" element={session ? <ViewPlans/> : <Navigate to="/authenticate" />}/>
             <Route path="/authenticate" element={session ? <Navigate to="/plans" /> : <Auth/>}/>
             <Route path="/new" element={session ? <></> : <Navigate to="/authenticate" />}/>            
           </Routes>
