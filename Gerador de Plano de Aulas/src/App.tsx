@@ -1,34 +1,78 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState, useEffect } from "react";
+//import Auth from "./components/auth/"
+import { Button, Container, Navbar } from "react-bootstrap";
+import { supabase } from "./supabase-client";
+import type { Session } from "@supabase/supabase-js";
+import { BrowserRouter, Link, Navigate, Route, Routes} from "react-router-dom";
 
 function App() {
-  const [count, setCount] = useState(0)
+  // UseState da sessão atual
+  const [session, setSession] = useState<Session | null>(null);
+  const [loading, setLoading] = useState(true);
 
+  // Atualiza a sessão para corresponder com a atual
+  const fetchSession = async () => {
+    const curentSession = await supabase.auth.getSession();
+    setSession(curentSession.data.session)
+    setLoading(false);
+  }
+
+// Carrega a sessão ao renderizar a página
+  useEffect(() => {
+    fetchSession();
+
+    const {data: authListener} = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    })
+
+    return () => {
+      authListener.subscription.unsubscribe();
+    }
+  }, [])
+
+  // Função de logout
+  const logout = async () => {
+    await supabase.auth.signOut();
+  }
+
+  // Render da página
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <BrowserRouter>
+    <Navbar>
+        <Container>
+          <Navbar.Brand><img src="/supabase-logo-icon.svg"/></Navbar.Brand>
+          <Navbar.Collapse className="justify-content-start">
+            {session
+              ? (<>
+                  <Link to="/viewProducts" className="navbarLink">Catálogo</Link> 
+                  <Link to="/order" className="navbarLink">Meu carrinho</Link>
+                </>)
+              : <></>
+            }
+          </Navbar.Collapse>
+          <Navbar.Collapse className="justify-content-end">
+            {session
+              ? <Navbar.Text>
+                  <Button id="logoutButton" onClick={() => {logout()}}>Encerrar Sessão</Button>
+                </Navbar.Text>
+              : <></>
+            }
+          </Navbar.Collapse>
+        </Container>
+    </Navbar>
+
+    <div className="app">
+      {!loading && (
+          <Routes>
+            <Route path="/" element={session ? <Navigate to="/viewPlans" /> : <Navigate to="/authenticate" />}/>
+            <Route path="/plans" element={session ? <></> : <Navigate to="/authenticate" />}/>
+            <Route path="/autheticate" element={session ? <Navigate to="/viewPlans" /> : <></>}/>
+            <Route path="/new" element={session ? <></> : <Navigate to="/authenticate" />}/>            
+          </Routes>
+      )}
+    </div>
+
+    </BrowserRouter>
   )
 }
 
