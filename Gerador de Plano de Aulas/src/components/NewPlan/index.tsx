@@ -1,4 +1,4 @@
-import { Button } from "react-bootstrap"
+import { Button, Form} from "react-bootstrap"
 import "./styles.css"
 import { useNavigate } from "react-router-dom"
 
@@ -8,6 +8,28 @@ export default function NewPlan(){
         <div className="newPlan">
             <h2>NOVO PLANO</h2>
             <div className="formNewPlan">
+                <Form>
+                    <Form.Group className="mb-3">
+                        <Form.Label>Tema:</Form.Label>
+                        <Form.Control type="text" placeholder="Química orgânica" />
+                    </Form.Group>
+                    <Form.Group className="mb-3">
+                        <Form.Label>Nível escolar:</Form.Label>
+                        <Form.Select aria-label="Default select example">
+                            <option selected disabled>Nível escolar do plano....</option>
+                            <option value="pré-escola">Pré - escola</option>
+                            <option value="ensino fundamental I">Ensino Fundamental I</option>
+                            <option value="ensino fundamental II">Ensino Fundamental II</option>
+                            <option value="ensino médio">Ensino Médio</option>
+                            <option value="faculdade">Faculdade</option>
+                            <option value="especialização">Especialização</option>
+                        </Form.Select>
+                    </Form.Group>
+                    <Form.Group className="mb-3">
+                        <Form.Label>Conteúdo do plano:</Form.Label>
+                        <Form.Control as="textarea" rows={10} ></Form.Control><br/>
+                    </Form.Group> 
+                </Form>
                 <Button variant="primary">Criar</Button>
                 <Button variant="danger" onClick={() => {redirect("/")}}>Cancelar</Button>
             </div>
