@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-//import Auth from "./components/auth/"
+import Auth from "./components/Auth";
 import { Button, Container, Navbar } from "react-bootstrap";
 import { supabase } from "./supabase-client";
 import type { Session } from "@supabase/supabase-js";
@@ -66,7 +66,7 @@ function App() {
           <Routes>
             <Route path="/" element={session ? <Navigate to="/viewPlans" /> : <Navigate to="/authenticate" />}/>
             <Route path="/plans" element={session ? <></> : <Navigate to="/authenticate" />}/>
-            <Route path="/autheticate" element={session ? <Navigate to="/viewPlans" /> : <></>}/>
+            <Route path="/authenticate" element={session ? <Navigate to="/viewPlans" /> : <Auth/>}/>
             <Route path="/new" element={session ? <></> : <Navigate to="/authenticate" />}/>            
           </Routes>
       )}
