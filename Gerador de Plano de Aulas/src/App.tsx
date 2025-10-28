@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Auth from "./components/Auth";
 import { Button, Container, Navbar } from "react-bootstrap";
 import type { Session } from "@supabase/supabase-js";
-import { BrowserRouter, Link, Navigate, Route, Routes} from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
 import { fetchSession, logout, setSessionListener } from "./handlers/sessionHandler";
 
 function App() {
@@ -33,15 +33,6 @@ function App() {
     <Navbar>
         <Container>
           <Navbar.Brand><img src="/supabase-logo-icon.svg"/></Navbar.Brand>
-          <Navbar.Collapse className="justify-content-start">
-            {session
-              ? (<>
-                  <Link to="/viewProducts" className="navbarLink">Catálogo</Link> 
-                  <Link to="/order" className="navbarLink">Meu carrinho</Link>
-                </>)
-              : <></>
-            }
-          </Navbar.Collapse>
           <Navbar.Collapse className="justify-content-end">
             {session
               ? <Navbar.Text>
@@ -56,9 +47,9 @@ function App() {
     <div className="app">
       {!loading && (
           <Routes>
-            <Route path="/" element={session ? <Navigate to="/viewPlans" /> : <Navigate to="/authenticate" />}/>
-            <Route path="/plans" element={session ? <></> : <Navigate to="/authenticate" />}/>
-            <Route path="/authenticate" element={session ? <Navigate to="/viewPlans" /> : <Auth/>}/>
+            <Route path="/" element={session ? <Navigate to="/plans" /> : <Navigate to="/authenticate" />}/>
+            <Route path="/plans" element={session ? <>aaaaa</> : <Navigate to="/authenticate" />}/>
+            <Route path="/authenticate" element={session ? <Navigate to="/plans" /> : <Auth/>}/>
             <Route path="/new" element={session ? <></> : <Navigate to="/authenticate" />}/>            
           </Routes>
       )}
