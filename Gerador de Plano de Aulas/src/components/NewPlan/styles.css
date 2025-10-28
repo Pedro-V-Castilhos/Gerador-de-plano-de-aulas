@@ -1,0 +1,15 @@
+.formNewPlan{
+    margin: 2em;
+    text-align: left;
+    gap:2em;
+    width:60%;
+    height:100%;
+}
+
+.newPlan h2{
+    margin:2em;
+}
+
+.newPlan button{
+    margin: 0.5em;
+}
