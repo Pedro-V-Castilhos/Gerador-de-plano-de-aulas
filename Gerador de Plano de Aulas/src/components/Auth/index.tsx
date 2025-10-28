@@ -2,8 +2,8 @@ import {useState, type ChangeEvent, type FormEvent } from "react";
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Button from 'react-bootstrap/Button';
-import {supabase} from "../../supabase-client";
 import "./styles.css"
+import { signIn, signUp } from "../../handlers/authenticationHandler";
 
 export default function Auth(){
     //Guarda o valor para poder fazer a alternância entre as abas de cadastro de login
@@ -19,20 +19,11 @@ export default function Auth(){
 
         // Verifica se é para criar uma conta ou se é para logar, e executa a função própria
         if(!hasAccount){
-            // CADASTRO
-            const {error} = await supabase.auth.signUp({email, password});
-            if(error){
-                setNewError(`Erro ao realizar cadastro: ${error.message}`);
-                return
-            }
+            signUp(email, password);
             sendVerifyEmail(true);
         }else{
             // LOGIN
-            const {error} = await supabase.auth.signInWithPassword({email, password});
-            if(error){
-                setNewError(`Erro ao realizar login: ${error.message}`)
-                return
-            }
+            signIn(email, password);
         }
     }
 
