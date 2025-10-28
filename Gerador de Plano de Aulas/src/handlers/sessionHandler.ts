@@ -1,5 +1,5 @@
 import type { AuthSession } from "@supabase/supabase-js";
-import { supabase } from "../components/clients/supabase-client";
+import { supabase } from "../components/clients/supabaseClient";
 
 // Carrega a sessão atual
 export const fetchSession = async () => {
