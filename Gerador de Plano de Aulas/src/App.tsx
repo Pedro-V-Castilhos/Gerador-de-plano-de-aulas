@@ -6,6 +6,7 @@ import { BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
 import { fetchSession, logout, setSessionListener } from "./handlers/sessionHandler";
 import ViewPlans from "./components/ViewPlans";
 import NewPlan from "./components/NewPlan";
+import ViewSpecificPlan from "./components/ViewSpecificPlan";
 
 function App() {
   // UseState da sessão atual
@@ -52,7 +53,8 @@ function App() {
             <Route path="/" element={session ? <Navigate to="/plans" /> : <Navigate to="/authenticate" />}/>
             <Route path="/plans" element={session ? <ViewPlans/> : <Navigate to="/authenticate" />}/>
             <Route path="/authenticate" element={session ? <Navigate to="/plans" /> : <Auth/>}/>
-            <Route path="/new" element={session ? <NewPlan/> : <Navigate to="/authenticate" />}/>            
+            <Route path="/new" element={session ? <NewPlan/> : <Navigate to="/authenticate" />}/> 
+            <Route path="/view/:pdfId" element={session ? <ViewSpecificPlan/> : <Navigate to="/authenticate"/>}/>           
           </Routes>
       )}
     </div>
