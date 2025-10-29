@@ -31,11 +31,10 @@ export default function ViewPlans(){
             <tbody>
                 {plans.length != 0
                 ? plans.map((plan) => {
-                    console.log(plan)
                     return(
                         <tr key={plan.id}>
                             <td>{plan.subject}</td>
-                            <td><Link to="/view">{plan.pdfUrl}</Link></td>
+                            <td><Link to={`/view/${plan.id}`}>{plan.pdfUrl}</Link></td>
                         </tr>
                     )
                 })

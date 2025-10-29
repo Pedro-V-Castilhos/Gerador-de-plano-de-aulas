@@ -4,7 +4,9 @@ import { supabase } from "../components/clients/supabaseClient"
 export const uploadPdf = async (pdf:jsPDF) => {
     const fileName = `plan-${Date.now()}.pdf`
 
-    const {error} = await supabase.storage.from("plansBucket").upload(fileName, pdf.output("blob"), {
+    const pdfBlob = pdf.output("blob") as Blob
+
+    const {error} = await supabase.storage.from("plansBucket").upload(fileName, pdfBlob, {
         contentType: "application/pdf",
         upsert: false,
     })

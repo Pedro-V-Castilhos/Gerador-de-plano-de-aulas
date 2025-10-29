@@ -27,7 +27,6 @@ export const markdownToPdf = async (markdownContent: string) => {
 
     try {
         const pdf = await generatePdfFromElement(tempElement);
-
         const urlPdf = await uploadPdf(pdf);
         return urlPdf;
     } catch (error) {
@@ -51,21 +50,20 @@ const generatePdfFromElement = async (htmlElement:HTMLElement) => {
         useCORS: true,
     })
 
-    const imgData = canvas.toDataURL("image/img")
+    const imgData = canvas.toDataURL("image/png")
     const pdf = new jsPDF("p", "mm", "a4")
     const imgWidth = 210
     const pageHeight = 297
     const imgHeight = (canvas.height * imgWidth) / canvas.width
     let heightLeft = imgHeight
-    let position = 0
+    const position = 0
 
     pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight)
     heightLeft -= pageHeight
     
-    while(heightLeft >= 0){
-        position = heightLeft - imgHeight;
+    while(heightLeft > 0){
         pdf.addPage();
-        pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight)
+        pdf.addImage(imgData, "PNG", 0, -heightLeft, imgWidth, imgHeight)
         heightLeft -= pageHeight
     }
 

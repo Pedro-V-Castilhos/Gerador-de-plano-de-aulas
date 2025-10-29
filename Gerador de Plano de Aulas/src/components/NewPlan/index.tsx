@@ -40,10 +40,12 @@ export default function NewPlan(){
                         <Form.Control as="textarea" rows={10} onChange={(e) => {setContent(e.target.value)}}></Form.Control><br/>
                     </Form.Group> 
                 </Form>
-                <Button variant="primary" onClick={async () => {
+                <Button variant="primary" onClick={async (e) => {
                     if(error){
                         console.log(error)
                     }else{
+                        const button = e.target as HTMLButtonElement
+                        button.disabled = true;
                         await generatePlan(theme, schoolLevel, content)
                         const idPdf = await savePdf(theme, aiResponse ?? "")
                         redirect(`/view/${idPdf}`)
