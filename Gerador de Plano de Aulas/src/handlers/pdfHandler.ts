@@ -1,16 +1,17 @@
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { marked } from "marked"
+import { uploadPdf } from "./pdfDatabaseHandler";
 
 export const markdownToPdf = async (markdownContent: string) => {
     if(!markdownContent){
-        return null
+        return
     }
 
     const htmlContent = await markdownToHtml(markdownContent)
 
     if(!htmlContent){
-        return null
+        return
     }
 
     const tempElement = document.createElement("div")
@@ -27,14 +28,13 @@ export const markdownToPdf = async (markdownContent: string) => {
     try {
         const pdf = await generatePdfFromElement(tempElement);
 
-        return pdf
+        const urlPdf = await uploadPdf(pdf);
+        return urlPdf;
     } catch (error) {
         console.error(error);
     } finally {
         document.body.removeChild(tempElement);
     }
-
-    return null
 }
 
 const markdownToHtml = async (markdownContent: string) => {

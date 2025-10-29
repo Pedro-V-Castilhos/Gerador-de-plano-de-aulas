@@ -3,6 +3,7 @@ import "./styles.css"
 import { useNavigate } from "react-router-dom"
 import { useGeneratePlan } from "../clients/geminiAiClient";
 import { useState } from "react";
+import { savePdf } from "../../handlers/pdfDatabaseHandler";
 
 export default function NewPlan(){
     const [theme, setTheme] = useState<string>("")
@@ -44,7 +45,8 @@ export default function NewPlan(){
                         console.log(error)
                     }else{
                         await generatePlan(theme, schoolLevel, content)
-                        console.log(aiResponse)
+                        const idPdf = await savePdf(theme, aiResponse ?? "")
+                        redirect(`/view/${idPdf}`)
                     }
                 }}>Criar</Button>
                 <Button variant="danger" onClick={() => {redirect("/")}}>Cancelar</Button>

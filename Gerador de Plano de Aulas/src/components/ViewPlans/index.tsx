@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import type { Plan } from "../../types/plan"
 import { fetchPlans } from "../../handlers/planHandler";
 import { Button } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./styles.css"
 
 export default function ViewPlans(){
@@ -35,7 +35,7 @@ export default function ViewPlans(){
                     return(
                         <tr key={plan.id}>
                             <td>{plan.subject}</td>
-                            <td><a href={plan.pdfUrl}>{plan.pdfUrl}</a></td>
+                            <td><Link to="/view">{plan.pdfUrl}</Link></td>
                         </tr>
                     )
                 })

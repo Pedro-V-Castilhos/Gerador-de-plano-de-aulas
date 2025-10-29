@@ -1,5 +1,6 @@
 import { GoogleGenAI } from "@google/genai";
 import { useState } from "react";
+import { markdownToPdf } from "../../handlers/pdfHandler";
 
 const ai = new GoogleGenAI({apiKey: import.meta.env.VITE_GEMINI_API_KEY});
 
@@ -17,7 +18,7 @@ export const useGeneratePlan = () => {
                 contents: `Gere um plano de aulas sobre ${theme}, para uma turma que está cursando o ${schoolLevel}, e que deve conter os seguintes temas: ${content}`,
             })
 
-            setResponse(response.text ?? null)
+            setResponse(await markdownToPdf(response.text ?? "Ops! Algo deu errado!") ?? null)
         }catch(e:unknown){
             if(e instanceof Error){
                 console.log(e.message)
