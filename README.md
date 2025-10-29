@@ -54,8 +54,9 @@
     • Delete: o usuário poderá deletar pedidos vinculados a ele próprio;
 
 ## Como executar (Local):
-
-No terminal, selecione uma pasta onde o projeto funcionará e execute os seguintes comandos:
+* Baixar o arquivo .env com as chaves da aplicação, fornecidos pelo email enviado pelo candidato.
+* Mover este arquivo para a pasta onde o projeto funcionará.
+* No terminal, selecione uma pasta onde o projeto funcionará e execute os seguintes comandos:
 ```bash
 # clonar repo
 git clone "https://github.com/Pedro-V-Castilhos/Gerador-de-plano-de-aulas.git"
