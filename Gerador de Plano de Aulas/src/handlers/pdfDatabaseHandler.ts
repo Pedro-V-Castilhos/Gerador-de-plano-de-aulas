@@ -17,7 +17,7 @@ export const uploadPdf = async (pdf:jsPDF) => {
     }
 
     const {data} = supabase.storage.from("plansBucket").getPublicUrl(fileName);
-
+    
     return data.publicUrl;
 }
 

@@ -10,7 +10,7 @@ export default function NewPlan(){
     const [schoolLevel, setSchoolLevel] = useState<string>("")
     const [content, setContent] = useState<string>("")
 
-    const {aiResponse, error, generatePlan} = useGeneratePlan();
+    const { error, generatePlan} = useGeneratePlan();
 
     const redirect = useNavigate();
 
@@ -46,8 +46,8 @@ export default function NewPlan(){
                     }else{
                         const button = e.target as HTMLButtonElement
                         button.disabled = true;
-                        await generatePlan(theme, schoolLevel, content)
-                        const idPdf = await savePdf(theme, aiResponse ?? "")
+                        const urlPdf = await generatePlan(theme, schoolLevel, content)
+                        const idPdf = await savePdf(theme, urlPdf ?? "")
                         redirect(`/view/${idPdf}`)
                     }
                 }}>Criar</Button>

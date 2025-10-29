@@ -24,7 +24,7 @@ export default function ViewSpecificPlan(){
             <h2>Plano gerado sobre {pdf[0].subject}:</h2>
             {pdf[0].id}
             <object data={pdf[0].pdfUrl} type="application/pdf">
-                <p>Seu navegador não suporta PDFs. <a href="caminho/para/seu/arquivo.pdf" download>Baixe o arquivo aqui</a>.</p>
+                <p>Seu navegador não suporta PDFs. <a href={pdf[0].pdfUrl} download>Baixe o arquivo aqui</a>.</p>
             </object>
             <Button variant="primary" onClick={() => {redirect("/")}}>Voltar</Button>
         </div>
